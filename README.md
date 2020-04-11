@@ -20,17 +20,20 @@ pip install -r requirements.txt
 
 
 python ListDatastore.py -h
-usage: ListDataStore.py [-h] [--hxip HXIP] [--hxpasswd HXPASSWD] [--hxuser HXUSER]
+usage: ListDataStore.py [-h] [--hxip HXIP] [--hxpasswd HXPASSWD] [--hxuser HXUSER] [--hxtoken HXTOKEN]
 
-HyperFlex List Datastores.
+List the datastores of a HyperFlex cluster.
 
 optional arguments:
   -h, --help           show this help message and exit
   --hxip HXIP          HyperFlex ip
   --hxpasswd HXPASSWD  HyperFlex Cluster Password
   --hxuser HXUSER      hx user name
+  --hxtoken HXTOKEN    HX API Token
 ```
 
+## HyperFlex Authentication Token
+There is a limitation of 5 new token requests in 15 minutes. To use the same token for the python scripts, you can use --hxtoken <token>
 
 ## hxdef.py
 

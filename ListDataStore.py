@@ -38,6 +38,9 @@ def check_arg(args=None):
                         help='hx user name',
                         # default='root'
                         )
+    parser.add_argument('--hxtoken',
+                        help='HX API Token',
+                        )
 
     return parser.parse_args(args)
 
@@ -49,6 +52,7 @@ args = check_arg(sys.argv[1:])
 hxip = args.hxip
 hxuser = args.hxuser
 hxpasswd = args.hxpasswd
+token = args.hxtoken
 
 if args.hxip == None:
     hxip = input("HyperFlex IP Address: ")
@@ -59,14 +63,16 @@ if args.hxuser == None:
 if args.hxpasswd == None:
     hxpasswd = getpass.getpass("Please enter the HyperFLex Password: ")
 
-# Get the Token.
-hxbearer = hxdef.get_hxtoken(hxip, hxuser, hxpasswd).json()
+if args.hxtoken == None:
+    # Get the Token.
+    hxbearer = hxdef.get_hxtoken(hxip, hxuser, hxpasswd).json()
+    token = hxbearer['access_token']
 
 # Get the Cluster UUID
-hxuuid = hxdef.get_hxuuid(hxip,hxbearer['access_token'])
+hxuuid = hxdef.get_hxuuid(hxip,token)
 
 #Get Datastores from Cluster
-ds = hxdef.get_ds(hxip,hxbearer['access_token'],hxuuid)
+ds = hxdef.get_ds(hxip,token,hxuuid)
 
 #Print the name and Freespace of the Datastores.
 for item in ds.json():

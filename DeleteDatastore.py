@@ -42,6 +42,9 @@ def check_arg(args=None):
                         help='Datastore name',
                         # default='root'
                         )
+    parser.add_argument('--hxtoken',
+                        help='HX API Token',
+                        )
 
     return parser.parse_args(args)
 
@@ -54,6 +57,7 @@ hxip = args.hxip
 hxuser = args.hxuser
 hxpasswd = args.hxpasswd
 dsname = args.dsname
+token = args.hxtoken
 
 
 if args.hxip == None:
@@ -68,15 +72,17 @@ if args.hxpasswd == None:
 if args.dsname == None:
     dsname = input("Datastore Name: ")
 
-hxbearer = hxdef.get_hxtoken(hxip, hxuser, hxpasswd).json()
+if args.hxtoken == None:
+    hxbearer = hxdef.get_hxtoken(hxip, hxuser, hxpasswd).json()
+    token = hxbearer['access_token']
 
 # Get Datastores from Cluster UUID
-hxuuid = hxdef.get_hxuuid(hxip,hxbearer['access_token'])
+hxuuid = hxdef.get_hxuuid(hxip,token)
 
 
 
 #Find Datastore UUID
-ds = hxdef.get_ds(hxip,hxbearer['access_token'],hxuuid)
+ds = hxdef.get_ds(hxip,token,hxuuid)
 
 for item in ds.json():
     if item['dsconfig']['name'] == dsname:

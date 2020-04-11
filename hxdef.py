@@ -17,8 +17,9 @@ import os
 
 # Generate HyperFlex API Token.
 def get_hxtoken(hxip, hxuser, hxpasswd):
-    payload = {'username': hxuser, 'password': hxpasswd, 'client_id': 'HxGuiClient', 'client_secret': 'Sunnyvale',
-               'redirect_uri': 'http://localhost:8080/aaa/redirect/'}
+    #payload = {'username': hxuser, 'password': hxpasswd, 'client_id': 'HxGuiClient', 'client_secret': 'Sunnyvale',
+    #           'redirect_uri': 'http://localhost:8080/aaa/redirect/'}
+    payload = {'username': hxuser, 'password': hxpasswd}
 
     headers = {
         "Content-type": "application/json",
@@ -30,7 +31,8 @@ def get_hxtoken(hxip, hxuser, hxpasswd):
     if hxauth.status_code == 201:
         return (hxauth)
     else:
-        print ("There was an error getting the Token. Please try again in 15 minutes")
+        print ("There was an error getting the Token. Please try again in 15 minutes.")
+        print ("You should be on HXDP 4.0 or Higher to run this script correctly. ")
         print("HTTP Error Code: ",hxauth.status_code)
         print ("Message: ",hxauth.text)
 
