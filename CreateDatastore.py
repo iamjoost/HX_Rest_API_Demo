@@ -43,6 +43,9 @@ def check_arg(args=None):
                         help='Blocksize. Default is 8K (8192). 4K has a value of 4096.',
                         default=8192
                         )
+    parser.add_argument('--hxtoken',
+                        help='HX API Token',
+                        )
 
     return parser.parse_args(args)
 
@@ -57,6 +60,7 @@ hxpasswd = args.hxpasswd
 dsname = args.dsname
 dssize = args.dssize
 dsblock = args.dsblock
+token = args.hxtoken
 
 if args.hxip == None:
     hxip = input("HyperFlex IP Address: ")
@@ -73,14 +77,16 @@ if args.dsname == None:
 if args.dssize == None:
     dssize = input("Datastore Size in Gb: ")
 
-
-hxbearer = hxdef.get_hxtoken(hxip, hxuser, hxpasswd).json()
+if args.hxtoken == None:
+    hxbearer = hxdef.get_hxtoken(hxip, hxuser, hxpasswd).json()
+    token = hxbearer['access_token']
 
 # Get Datastores from Cluster UUID
-hxuuid = hxdef.get_hxuuid(hxip,hxbearer['access_token'])
+hxuuid = hxdef.get_hxuuid(hxip,token)
 
 #Create DS
-dscreated = hxdef.create_ds (hxip,hxbearer['access_token'],hxuuid,dsname,dssize,dsblock)
+dstotalsize = int(dssize)*1024*1024*1024
+dscreated = hxdef.create_ds (hxip,token,hxuuid,dsname,dstotalsize,dsblock)
 if dscreated:
     print("Datastore is created")
 else:
