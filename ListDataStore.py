@@ -73,6 +73,7 @@ hxuuid = hxdef.get_hxuuid(hxip,token)
 
 #Get Datastores from Cluster
 ds = hxdef.get_ds(hxip,token,hxuuid)
+print (ds.json())
 
 #Print the name and Freespace of the Datastores.
 for item in ds.json():

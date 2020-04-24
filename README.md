@@ -2,7 +2,7 @@
 
 HyperFlex REST APIs are fun, but where to begin.
 
-Here are some start example scripts.
+Here are some start example scripts. It will work with HyperFlex Data Platform 4.0 and higher!
 
 
 ## Getting Started

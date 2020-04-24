@@ -23,7 +23,7 @@ import getpass
 ################## FUNCTIONS ################
 # Getting the parameters
 def check_arg(args=None):
-    parser = argparse.ArgumentParser(description='HyperFlex Get Authentication Token.')
+    parser = argparse.ArgumentParser(description='Create a the datastore at the HyperFlex cluster.')
     parser.add_argument('--hxip',
                         help='HyperFlex ip',
                         )
